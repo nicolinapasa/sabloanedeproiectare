@@ -1,9 +1,5 @@
 package com.example.SabloaneProiectare;
 
-import java.util.List;
-
-import java.util.List;
-
 public class Paragraph implements Element {
 
     private String text;
@@ -27,18 +23,25 @@ public class Paragraph implements Element {
     }
 
     @Override
-    public void print() {
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
+
+    public void render() {
         Context context = new Context(text);
 
-        if(textAlignment != null) {
+        if (textAlignment != null) {
             textAlignment.render(this, context);
         } else {
             System.out.println("Paragraph: " + text);
         }
-
     }
 
-    public void setAlignStrategy (AlignStrategy strategy) {
+    public void setAlignStrategy(AlignStrategy strategy) {
         this.textAlignment = strategy;
+    }
+
+    public String getText() {
+        return text;
     }
 }

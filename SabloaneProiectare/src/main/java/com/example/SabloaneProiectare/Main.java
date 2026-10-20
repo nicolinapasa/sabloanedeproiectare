@@ -1,61 +1,54 @@
 package com.example.SabloaneProiectare;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-@SpringBootApplication
 public class Main {
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 
-		long startTime = System.currentTimeMillis();
+		Section cap1 = new Section("Capitolul 1");
 
-		ImageProxy img1 = new ImageProxy("Pamela Anderson");
-		ImageProxy img2 = new ImageProxy("Kim Kardashian");
-		ImageProxy img3 = new ImageProxy("Kirby Griffin");
+		Paragraph p1 = new Paragraph("Paragraph 1");
+		cap1.add(p1);
 
-		Section playboyS1 = new Section("Front Cover");
-		playboyS1.add(img1);
+		Paragraph p2 = new Paragraph("Paragraph 2");
+		cap1.add(p2);
 
-		Section playboyS2 = new Section("Summer Girls");
-		playboyS2.add(img2);
-		playboyS2.add(img3);
+		Paragraph p3 = new Paragraph("Paragraph 3");
+		cap1.add(p3);
 
-		Book playboy = new Book("Playboy");
+		Paragraph p4 = new Paragraph("Paragraph 4");
+		cap1.add(p4);
 
-		playboy.addContent(playboyS1);
-		playboy.addContent(playboyS2);
+		cap1.add(new ImageProxy("ImageOne"));
+		cap1.add(new Image("ImageTwo"));
+		cap1.add(new Paragraph("Some text"));
+		cap1.add(new Table("Table 1"));
 
-		long endTime = System.currentTimeMillis();
+		BookStatistics stats = new BookStatistics();
 
-		System.out.println(
-				"Creation of the content took "
-						+ (endTime - startTime)
-						+ " milliseconds"
-		);
+		cap1.accept(stats);
 
-		startTime = System.currentTimeMillis();
+		stats.printStatistics();
 
-		playboyS1.print();
+		Book book = new Book("My Book");
 
-		endTime = System.currentTimeMillis();
+		cap1.add(new Paragraph("Paragraph 1"));
 
-		System.out.println(
-				"Printing of the section 1 took "
-						+ (endTime - startTime)
-						+ " milliseconds"
-		);
+		Section cap2 = new Section("Capitolul 2");
+		cap2.add(new Paragraph("Paragraph 2"));
 
-		startTime = System.currentTimeMillis();
+		Section cap3 = new Section("Capitolul 3");
+		cap3.add(new Paragraph("Paragraph 3"));
 
-		playboyS1.print();
+		book.addContent(cap1);
+		book.addContent(cap2);
+		book.addContent(cap3);
 
-		endTime = System.currentTimeMillis();
+		GenerateToC generateToC = new GenerateToC();
 
-		System.out.println(
-				"Printing again the section 1 took "
-						+ (endTime - startTime)
-						+ " milliseconds"
-		);
+		book.accept(generateToC);
+
+		TableOfContents toc = generateToC.getToC();
+
+		toc.render();
 	}
 }

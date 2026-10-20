@@ -1,20 +1,26 @@
 package com.example.SabloaneProiectare;
 
-import java.util.List;
-
 public class Image implements Element, Picture {
+
     private String url;
     private Dimension dim;
     private ImageContent content;
 
-    public Image(String url, Dimension dim,  ImageContent content) {
+    public Image(String url) {
         this.url = url;
         this.dim = new Dimension(1920, 1080);
         this.content = new ImageContent("Image content: " + url);
     }
 
-    public Image(String url){
+    public Image(String url, Dimension dim, ImageContent content) {
         this.url = url;
+        this.dim = dim;
+        this.content = content;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 
     @Override
@@ -30,8 +36,7 @@ public class Image implements Element, Picture {
         return null;
     }
 
-    @Override
-    public void print() {
+    public void render() {
         System.out.println("Image with name: " + url);
     }
 
@@ -39,6 +44,7 @@ public class Image implements Element, Picture {
     public Dimension dim() {
         return dim;
     }
+
     @Override
     public ImageContent content() {
         return content;
@@ -48,5 +54,4 @@ public class Image implements Element, Picture {
     public String url() {
         return url;
     }
-
 }

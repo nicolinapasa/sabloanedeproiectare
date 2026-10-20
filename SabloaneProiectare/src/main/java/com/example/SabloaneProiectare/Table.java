@@ -9,6 +9,11 @@ public class Table implements Element {
     }
 
     @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
+
+    @Override
     public void add(Element element) {
     }
 
@@ -21,8 +26,7 @@ public class Table implements Element {
         return null;
     }
 
-    @Override
-    public void print() {
+    public void render() {
         System.out.println("Table: " + something);
     }
 }

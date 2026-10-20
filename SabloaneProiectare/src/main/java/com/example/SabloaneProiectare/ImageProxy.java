@@ -13,7 +13,6 @@ public class ImageProxy implements Element, Picture {
     }
 
     private Image loadImage() {
-
         if (realImage == null) {
             realImage = new Image(url);
         }
@@ -22,8 +21,12 @@ public class ImageProxy implements Element, Picture {
     }
 
     @Override
-    public void print() {
-        loadImage().print();
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
+
+    public void render() {
+        loadImage().render();
     }
 
     @Override

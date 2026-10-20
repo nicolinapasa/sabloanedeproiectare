@@ -28,10 +28,19 @@ public class Section implements Element {
     }
 
     @Override
-    public void print() {
-        System.out.println("Section: " + title);
-        for(Element element : children) {
-            element.print();
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+
+        for (Element element : children) {
+            element.accept(visitor);
         }
+    }
+
+    public void render() {
+        System.out.println("Section: " + title);
+    }
+
+    public String getTitle() {
+        return title;
     }
 }
