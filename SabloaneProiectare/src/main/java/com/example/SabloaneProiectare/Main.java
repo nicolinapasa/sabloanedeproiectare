@@ -1,54 +1,48 @@
 package com.example.SabloaneProiectare;
 
+import com.example.SabloaneProiectare.difexamples.ClientComponent;
+import com.example.SabloaneProiectare.difexamples.SingletonComponent;
+import com.example.SabloaneProiectare.difexamples.TransientComponent;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+
+@SpringBootApplication
 public class Main {
 
 	public static void main(String[] args) {
 
-		Section cap1 = new Section("Capitolul 1");
+		ApplicationContext context =
+				SpringApplication.run(Main.class, args);
 
-		Paragraph p1 = new Paragraph("Paragraph 1");
-		cap1.add(p1);
+		TransientComponent transientBean =
+				context.getBean(TransientComponent.class);
 
-		Paragraph p2 = new Paragraph("Paragraph 2");
-		cap1.add(p2);
+		transientBean.operation();
 
-		Paragraph p3 = new Paragraph("Paragraph 3");
-		cap1.add(p3);
+		transientBean =
+				context.getBean(TransientComponent.class);
 
-		Paragraph p4 = new Paragraph("Paragraph 4");
-		cap1.add(p4);
+		transientBean.operation();
 
-		cap1.add(new ImageProxy("ImageOne"));
-		cap1.add(new Image("ImageTwo"));
-		cap1.add(new Paragraph("Some text"));
-		cap1.add(new Table("Table 1"));
+		SingletonComponent singletonBean =
+				context.getBean(SingletonComponent.class);
 
-		BookStatistics stats = new BookStatistics();
+		singletonBean.operation();
 
-		cap1.accept(stats);
+		singletonBean =
+				context.getBean(SingletonComponent.class);
 
-		stats.printStatistics();
+		singletonBean.operation();
 
-		Book book = new Book("My Book");
+		ClientComponent c =
+				context.getBean(ClientComponent.class);
 
-		cap1.add(new Paragraph("Paragraph 1"));
+		c.operation();
 
-		Section cap2 = new Section("Capitolul 2");
-		cap2.add(new Paragraph("Paragraph 2"));
+		c =
+				(ClientComponent) context.getBean("clientComponent");
 
-		Section cap3 = new Section("Capitolul 3");
-		cap3.add(new Paragraph("Paragraph 3"));
-
-		book.addContent(cap1);
-		book.addContent(cap2);
-		book.addContent(cap3);
-
-		GenerateToC generateToC = new GenerateToC();
-
-		book.accept(generateToC);
-
-		TableOfContents toc = generateToC.getToC();
-
-		toc.render();
+		c.operation();
 	}
 }
