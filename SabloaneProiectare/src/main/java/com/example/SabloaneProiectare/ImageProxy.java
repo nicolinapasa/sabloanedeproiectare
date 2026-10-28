@@ -1,11 +1,22 @@
+
 package com.example.SabloaneProiectare;
 
-public class ImageProxy implements Element, Picture {
+import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
+
+@Entity
+public class ImageProxy extends BaseElement implements Picture {
 
     private String url;
+
+    @Transient
     private Dimension dimension;
 
+    @Transient
     private Image realImage;
+
+    public ImageProxy() {
+    }
 
     public ImageProxy(String url) {
         this.url = url;
@@ -36,6 +47,9 @@ public class ImageProxy implements Element, Picture {
 
     @Override
     public Dimension dim() {
+        if (dimension == null) {
+            dimension = new Dimension(1920, 1080);
+        }
         return dimension;
     }
 
@@ -55,5 +69,9 @@ public class ImageProxy implements Element, Picture {
     @Override
     public Element get(int index) {
         return null;
+    }
+
+    public String getUrl() {
+        return url;
     }
 }

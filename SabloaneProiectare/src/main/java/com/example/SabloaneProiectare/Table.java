@@ -1,8 +1,15 @@
+
 package com.example.SabloaneProiectare;
 
-public class Table implements Element {
+import jakarta.persistence.Entity;
+
+@Entity
+public class Table extends BaseElement {
 
     private String something;
+
+    public Table() {
+    }
 
     public Table(String something) {
         this.something = something;
@@ -28,5 +35,9 @@ public class Table implements Element {
 
     public void render() {
         System.out.println("Table: " + something);
+    }
+
+    public String getSomething() {
+        return something;
     }
 }

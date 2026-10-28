@@ -1,10 +1,22 @@
+
 package com.example.SabloaneProiectare;
 
-public class Image implements Element, Picture {
+import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
+
+@Entity
+public class Image extends BaseElement implements Picture {
 
     private String url;
+
+    @Transient
     private Dimension dim;
+
+    @Transient
     private ImageContent content;
+
+    public Image() {
+    }
 
     public Image(String url) {
         this.url = url;
@@ -52,6 +64,10 @@ public class Image implements Element, Picture {
 
     @Override
     public String url() {
+        return url;
+    }
+
+    public String getUrl() {
         return url;
     }
 }

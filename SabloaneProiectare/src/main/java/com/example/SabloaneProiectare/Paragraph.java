@@ -1,9 +1,19 @@
+
 package com.example.SabloaneProiectare;
 
-public class Paragraph implements Element {
+import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
+
+@Entity
+public class Paragraph extends BaseElement {
 
     private String text;
+
+    @Transient
     private AlignStrategy textAlignment;
+
+    public Paragraph() {
+    }
 
     public Paragraph(String text) {
         this.text = text;
