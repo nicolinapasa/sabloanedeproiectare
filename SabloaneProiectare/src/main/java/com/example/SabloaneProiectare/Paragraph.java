@@ -1,10 +1,19 @@
+
 package com.example.SabloaneProiectare;
 
-import java.util.List;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
 
-public class Paragraph implements Element {
+@Entity
+public class Paragraph extends BaseElement {
 
     private String text;
+
+    @Transient
+    private AlignStrategy textAlignment;
+
+    public Paragraph() {
+    }
 
     public Paragraph(String text) {
         this.text = text;
@@ -24,7 +33,25 @@ public class Paragraph implements Element {
     }
 
     @Override
-    public void print() {
-        System.out.println("Paragraph: " + text);
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
+
+    public void render() {
+        Context context = new Context(text);
+
+        if (textAlignment != null) {
+            textAlignment.render(this, context);
+        } else {
+            System.out.println("Paragraph: " + text);
+        }
+    }
+
+    public void setAlignStrategy(AlignStrategy strategy) {
+        this.textAlignment = strategy;
+    }
+
+    public String getText() {
+        return text;
     }
 }

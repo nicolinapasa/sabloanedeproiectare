@@ -1,11 +1,23 @@
+
 package com.example.SabloaneProiectare;
 
-public class Table implements Element {
+import jakarta.persistence.Entity;
+
+@Entity
+public class Table extends BaseElement {
 
     private String something;
 
+    public Table() {
+    }
+
     public Table(String something) {
         this.something = something;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 
     @Override
@@ -21,8 +33,11 @@ public class Table implements Element {
         return null;
     }
 
-    @Override
-    public void print() {
+    public void render() {
         System.out.println("Table: " + something);
+    }
+
+    public String getSomething() {
+        return something;
     }
 }

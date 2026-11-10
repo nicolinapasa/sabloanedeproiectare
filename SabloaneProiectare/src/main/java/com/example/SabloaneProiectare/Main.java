@@ -1,50 +1,48 @@
 package com.example.SabloaneProiectare;
 
+import com.example.SabloaneProiectare.difexamples.ClientComponent;
+import com.example.SabloaneProiectare.difexamples.SingletonComponent;
+import com.example.SabloaneProiectare.difexamples.TransientComponent;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 public class Main {
 
 	public static void main(String[] args) {
 
-		Book noapteBuna = new Book("Noapte buna, copil!");
-		Author rpGheo = new Author("Radu Pavel", "Gheo");
-		noapteBuna.addAuthor(rpGheo);
+		ApplicationContext context =
+				SpringApplication.run(Main.class, args);
 
-		Section cap1 = new Section("Capitolul 1");
-		Section cap11 = new Section("Capitolul 1.1");
-		Section cap111 = new Section("Capitolul 1.1.1");
-		Section cap1111 = new Section("Subchapter 1.1.1.1");
+		TransientComponent transientBean =
+				context.getBean(TransientComponent.class);
 
-		noapteBuna.addContent(
-				new Paragraph("Multumesc celor care ...")
-		);
+		transientBean.operation();
 
-		noapteBuna.addContent(cap1);
+		transientBean =
+				context.getBean(TransientComponent.class);
 
-		cap1.add(
-				new Paragraph("Moto capitol")
-		);
+		transientBean.operation();
 
-		cap1.add(cap11);
+		SingletonComponent singletonBean =
+				context.getBean(SingletonComponent.class);
 
-		cap11.add(
-				new Paragraph("Text from subchapter 1.1")
-		);
+		singletonBean.operation();
 
-		cap11.add(cap111);
+		singletonBean =
+				context.getBean(SingletonComponent.class);
 
-		cap111.add(
-				new Paragraph("Text from subchapter 1.1.1")
-		);
+		singletonBean.operation();
 
-		cap111.add(cap1111);
+		ClientComponent c =
+				context.getBean(ClientComponent.class);
 
-		cap1111.add(
-				new Image("Image subchapter 1.1.1.1")
-		);
+		c.operation();
 
-		noapteBuna.print();
+		c =
+				(ClientComponent) context.getBean("clientComponent");
+
+		c.operation();
 	}
 }
